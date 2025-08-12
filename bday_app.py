@@ -205,7 +205,15 @@ if not st.session_state.start_clicked:
         </div>
     """, unsafe_allow_html=True)
     if os.path.exists("assets/cat_disclaimer.jpg"):
-        st.image("assets/cat_disclaimer.jpg", width=300)
+        st.markdown(
+            f"""
+            <div style='text-align: center;'>
+                <img src='assets/cat_disclaimer.jpg' width='300'/>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )   
+
     else:
         st.warning("Couldn't find cat_disclaimer.jpg — make sure it's in the assets folder.")
     
