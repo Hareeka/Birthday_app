@@ -8,24 +8,30 @@
       margin: 0;
       padding: 0;
       color: #2c3e50;
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* center everything horizontally */
+      min-height: 100vh;
+      padding: 50px 10px;
+      box-sizing: border-box;
     }
 
     .section {
       max-width: 800px;
-      margin: 60px auto;  /* More vertical space between sections */
+      width: 100%;
+      margin-bottom: 60px;
       padding: 20px;
+      box-sizing: border-box;
     }
 
     #candle-section {
       text-align: center;
-      padding: 20px;
-      margin-bottom: 50px; /* space below candle */
       border: 2px solid #e17055;
       border-radius: 10px;
       background: #fff5f8;
       max-width: 320px;
-      margin-left: auto;
-      margin-right: auto;
+      padding: 20px;
+      box-sizing: border-box;
     }
 
     #candle {
@@ -44,41 +50,38 @@
 
     #picture-section {
       text-align: center;
-      margin-bottom: 50px;
       border: 2px solid #e17055;
       border-radius: 10px;
       background: #fff5f8;
       max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 10px;
+      padding: 20px;
+      box-sizing: border-box;
       display: none;
       animation: fadeIn 1.5s ease-in;
+      margin: 0 auto;
     }
 
-    /* Center envelope section vertically and horizontally */
     #envelope-section {
-      display: flex;
-      justify-content: center; /* horizontal center */
-      align-items: center;     /* vertical center */
-      height: 100vh;           /* full viewport height */
       border: 2px solid #e17055;
       border-radius: 10px;
       background: #fff5f8;
       max-width: 350px;
-      margin: 0 auto;          /* horizontally center the section */
-      padding: 10px;
-      display: none;           /* initially hidden, will show via JS */
-      animation: fadeIn 1.5s ease-in;
+      padding: 20px;
       box-sizing: border-box;
+      display: none;
+      animation: fadeIn 1.5s ease-in;
+      margin: 0 auto;
+    }
+
+    h2 {
+      margin-top: 0;
     }
 
     .envelope-container {
       display: flex;
       justify-content: center;
-      align-items: center;
       cursor: pointer;
-      width: 100%;             /* take full width of envelope-section */
+      margin-top: 20px;
     }
 
     .envelope {
@@ -136,21 +139,19 @@
 </head>
 <body>
 
-<div class="section" id="candle-section">
-
-  <!-- 🎂 Candle Blowing Section -->
-  <div id="candle-section">
+  <!-- Candle Section -->
+  <div id="candle-section" class="section">
     <div id="candle"></div>
     <p id="blown">You blew out the candles! 🥳🎉</p>
   </div>
 
-  <!-- 📸 Picture Section -->
-  <div id="picture-section">
+  <!-- Picture Section -->
+  <div id="picture-section" class="section">
     <h2>🎬 PICTURE ABHI BHI BAAKI HAI 🎬</h2>
   </div>
 
-  <!-- 💌 Envelope Section -->
-  <div id="envelope-section">
+  <!-- Envelope Section -->
+  <div id="envelope-section" class="section">
     <div class="envelope-container" onclick="openEnvelope()">
       <div class="envelope" id="envelope">
         <div class="flap"></div>
@@ -182,8 +183,6 @@
       </div>
     </div>
   </div>
-
-</div>
 
 <script>
   let audioContext = null;
@@ -221,7 +220,7 @@
       document.getElementById("candle").style.backgroundImage = "url('{{candle_blown}}')";
       document.getElementById("blown").style.display = "block";
 
-      // Delay for picture
+      // Show picture section after 1 sec
       setTimeout(() => {
         document.getElementById("picture-section").style.display = "block";
         window.scrollTo({ 
@@ -230,9 +229,9 @@
         });
       }, 1000);
 
-      // Delay for envelope
+      // Show envelope section after 3 sec
       setTimeout(() => {
-        document.getElementById("envelope-section").style.display = "flex";
+        document.getElementById("envelope-section").style.display = "block";
         window.scrollTo({ 
           top: document.getElementById("envelope-section").offsetTop, 
           behavior: "smooth" 
