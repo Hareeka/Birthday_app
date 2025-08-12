@@ -62,26 +62,6 @@ st.markdown(
 # --- SET PAGE CONFIG ---
 st.set_page_config(page_title="Happy Birthday Sherly 🎂", layout="wide")
 
-st.markdown(
-    """
-    <style>
-    /* Center everything inside the main container */
-    .main {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-
-    /* Also center components inside columns */
-    [data-testid="stHorizontalBlock"] {
-        justify-content: center;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
 # --- INITIAL SESSION STATE ---
 # Check if the volume check has been done
