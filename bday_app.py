@@ -62,7 +62,6 @@ st.markdown(
 # --- SET PAGE CONFIG ---
 st.set_page_config(page_title="Happy Birthday Sherly 🎂", layout="wide")
 
-
 # --- INITIAL SESSION STATE ---
 # Check if the volume check has been done
 if "volume_checked" not in st.session_state:
@@ -205,10 +204,7 @@ if not st.session_state.start_clicked:
         </div>
     """, unsafe_allow_html=True)
     if os.path.exists("assets/cat_disclaimer.jpg"):
-        col1, col2, col3 = st.columns([1, 2, 1])
-        with col2:
-            st.image("assets/cat_disclaimer.jpg", width=300)
-
+        st.image("assets/cat_disclaimer.jpg", width=300)
     else:
         st.warning("Couldn't find cat_disclaimer.jpg — make sure it's in the assets folder.")
     
