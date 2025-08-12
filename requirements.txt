@@ -1,5 +1,7 @@
 streamlit
 streamlit-lottie
-
-streamlit
 streamlit-mic-recorder
+numpy
+scipy
+
+
