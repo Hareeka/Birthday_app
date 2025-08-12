@@ -279,6 +279,8 @@ if st.session_state.start_clicked:
         st.markdown("<h3 style='text-align: center;'>🎂 Blow the candles on your cake 🎂</h3>", unsafe_allow_html=True)
         st.markdown("<p style='text-align: center;'>Make a wish and blow near your mic 🎤</p>", unsafe_allow_html=True)
 
+    
+
         col_left, col_center, col_right = st.columns([1, 2, 1])
         with col_left:
             st.video("assets/cat1.mp4")
@@ -286,8 +288,7 @@ if st.session_state.start_clicked:
             if st.session_state.candle_blown:
                 st.image("assets/cake_blown.gif", use_container_width=True)
                 st.success("You blew out the candles! Happy Birthday! 🥳")
-            else:
-                st.image("assets/cake_with_candles.gif", use_container_width=True)
+            
         with col_right:
             st.video("assets/cat3.mp4")
 
@@ -305,7 +306,8 @@ if st.session_state.start_clicked:
         html_code = html_template.replace("{{candle_unlit}}", candle_unlit_b64)\
                                  .replace("{{candle_blown}}", candle_blown_b64)
 
-        components.html(html_code, height=600)
+        with st.container(border=True):
+            components.html(html_code, height=600)
 
         if st.session_state.candle_blown and st.button("Light the candles again"):
             st.session_state.candle_blown = False
