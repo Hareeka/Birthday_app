@@ -1,261 +1,272 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <style>
+    <style>
+        /* General body styles for a clean slate */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fff0f5;
+            font-family: 'Georgia', serif;
+            color: #2c3e50;
+        }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 320px;
-      overflow-x: hidden;
-    }
+        /* Centering container for the entire content */
+        .main-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    
-    body {
-      background-color: #fff0f5;
-      font-family: 'Georgia', serif;
-      margin: 0;
-      padding: 0;
-      color: #2c3e50;
-    }
+        /* The candle blowing section, centered */
+        #candle-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 50px;
+            border: 2px solid #e17055;
+            border-radius: 10px;
+            background: #fff5f8;
+            max-width: 400px; /* Adjusted width for better centering */
+            width: 90%;
+            box-sizing: border-box;
+        }
 
-    .section {
-      max-width: 800px;
-      margin: 60px auto;  /* More vertical space between sections */
-      padding: 20px;
-    }
+        #candle {
+            width: 100%;
+            max-width: 250px; /* Make the candle responsive */
+            height: 250px; /* Make the candle responsive */
+            background: url("{{candle_unlit}}") no-repeat center/contain;
+            margin: 0 auto;
+        }
 
-    #candle-section {
-      text-align: center;
-      padding: 20px;
-      margin-bottom: 50px; /* space below candle */
-      border: 2px solid #e17055;
-      border-radius: 10px;
-      background: #fff5f8;
-      max-width: 320px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+        #blown {
+            display: none;
+            font-size: 24px;
+            color: green;
+            margin-top: 10px;
+        }
 
-    #candle {
-      width: 100px;
-      height: 200px;
-      background: url("{{candle_unlit}}") no-repeat center/contain;
-      margin: 0 auto;
-    }
+        /* Picture section - initially hidden */
+        #picture-section {
+            text-align: center;
+            margin-bottom: 50px;
+            border: 2px solid #e17055;
+            border-radius: 10px;
+            background: #fff5f8;
+            max-width: 600px;
+            width: 90%;
+            padding: 10px;
+            display: none; /* Initially hidden */
+            animation: fadeIn 1.5s ease-in;
+            box-sizing: border-box;
+        }
 
-    #blown {
-      display: none;
-      font-size: 24px;
-      color: green;
-      margin-top: 10px;
-    }
+        /* Envelope section - initially hidden and centered */
+        #envelope-section {
+            display: none; /* Initially hidden */
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+            margin-top: 50px;
+            border: 2px solid #e17055;
+            border-radius: 10px;
+            background: #fff5f8;
+            max-width: 350px;
+            width: 90%;
+            padding: 10px;
+            animation: fadeIn 1.5s ease-in;
+            box-sizing: border-box;
+        }
 
-    #picture-section {
-      text-align: center;
-      margin-bottom: 50px;
-      border: 2px solid #e17055;
-      border-radius: 10px;
-      background: #fff5f8;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 10px;
-      display: none;
-      animation: fadeIn 1.5s ease-in;
-    }
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
 
-    #envelope-section {
-      margin-top: 50px;
-      border: 2px solid #e17055;
-      border-radius: 10px;
-      background: #fff5f8;
-      max-width: 350px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 10px;
-      display: none;
-      animation: fadeIn 1.5s ease-in;
-    }
+        .envelope-container {
+            display: flex;
+            justify-content: center;
+            cursor: pointer;
+            width: 100%;
+        }
 
-    h2 {
-      text-align: center;
-      margin-top: 40px;
-    }
+        .envelope {
+            position: relative;
+            width: 100%;
+            min-height: 400px;
+            background: #f8c291;
+            overflow: hidden;
+            border: 2px solid #e17055;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
 
-    .envelope-container {
-      display: flex;
-      justify-content: center;
-      cursor: pointer;
-      margin-top: 20px;
-    }
+        .envelope .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: #e17055;
+            transform-origin: top;
+            transition: transform 1s ease-in-out;
+            z-index: 2;
+            border-bottom: 2px solid #d35400;
+        }
 
-    .envelope {
-      position: relative;
-      width: 300px;
-      min-height: 400px;
-      background: #f8c291;
-      overflow: hidden;
-      border: 2px solid #e17055;
-      border-radius: 10px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
+        .envelope.open .flap {
+            transform: rotateX(-180deg);
+        }
 
-    .envelope .flap {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 50%;
-      background: #e17055;
-      transform-origin: top;
-      transition: transform 1s ease-in-out;
-      z-index: 2;
-      border-bottom: 2px solid #d35400;
-    }
+        .envelope .letter {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: #fff;
+            color: #2d3436;
+            box-sizing: border-box;
+            transition: top 1s ease-in-out;
+            max-height: 500px;
+            overflow-y: auto;
+            z-index: 1;
+        }
 
-    .envelope.open .flap {
-      transform: rotateX(-180deg);
-    }
+        .envelope.open .letter {
+            top: 0;
+        }
 
-    .envelope .letter {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      padding: 20px;
-      background: #fff;
-      color: #2d3436;
-      box-sizing: border-box;
-      transition: top 1s ease-in-out;
-      max-height: 500px;
-      overflow-y: auto;
-      z-index: 1;
-    }
-
-    .envelope.open .letter {
-      top: 0;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
 
-<div class="section" id="candle-section">
-
-
-  <!-- 🎂 Candle Blowing Section -->
-  <div id="candle-section">
-    <div id="candle"></div>
-    <p id="blown">You blew out the candles! 🥳🎉</p>
-  </div>
-
-  <!-- 📸 Picture Section -->
-  <div id="picture-section">
-    <h2>🎬 PICTURE ABHI BHI BAAKI HAI 🎬</h2>
-  </div>
-
-  <!-- 💌 Envelope Section -->
-  <div id="envelope-section">
-    <div class="envelope-container" onclick="openEnvelope()">
-      <div class="envelope" id="envelope">
-        <div class="flap"></div>
-        <div class="letter">
-          <p>Dear Sherly,</p>
-          <p>Happy Birthday! 🎉</p>
-          <p>
-            On your special day, I just wanted to say how much you mean to me. 💖<br><br>
-            You're the sunshine on my cloudiest days, the calm in my storms, and the laughter in my silence.<br><br>
-            We may be apart for miles, we may don't meet daily but always remember that I would always love you like I always did.<br><br>
-            The strings of my breath always look for the muse of its rhythm<br>
-            Rhythm to fly<br>
-            Rhythm for brew<br>
-            And in you, that rhythm softly grew—<br>
-            A song of joy, of time well spent,<br>
-            Of laughter shared, of hearts unbeat.<br>
-            Today, the tune just plays for you,<br>
-            A birthday wish in every hue—<br>
-            May your days compose a melody<br>
-            Of love, of peace, and harmony.<br><br>
-            I hope this little app made you smile and gave you a tiny glimpse of how special you are to me.<br><br>
-            May your birthday be filled with love, joy, and a million happy memories. 🎉🎂<br><br>
-            Happy Birthday once again! 🎈<br><br>
-            Hope this little app made you smile and feel special ^_^
-          </p>
-          <p>With love,</p>
-          <p>From Your luv 💖</p>
-        </div>
-      </div>
+<div class="main-container">
+    <div id="candle-section">
+        <div id="candle"></div>
+        <p id="blown">You blew out the candles! 🥳🎉</p>
     </div>
-  </div>
 
+    <div id="picture-section">
+        <h2>🎬 PICTURE ABHI BHI BAAKI HAI 🎬</h2>
+        </div>
+
+    <div id="envelope-section">
+        <div class="envelope-container" onclick="openEnvelope()">
+            <div class="envelope" id="envelope">
+                <div class="flap"></div>
+                <div class="letter">
+                    <p>Dear Sherly,</p>
+                    <p>Happy Birthday! 🎉</p>
+                    <p>
+                        On your special day, I just wanted to say how much you mean to me. 💖<br><br>
+                        You're the sunshine on my cloudiest days, the calm in my storms, and the laughter in my silence.<br><br>
+                        We may be apart for miles, we may don't meet daily but always remember that I would always love you like I always did.<br><br>
+                        The strings of my breath always look for the muse of its rhythm<br>
+                        Rhythm to fly<br>
+                        Rhythm for brew<br>
+                        And in you, that rhythm softly grew—<br>
+                        A song of joy, of time well spent,<br>
+                        Of laughter shared, of hearts unbeat.<br>
+                        Today, the tune just plays for you,<br>
+                        A birthday wish in every hue—<br>
+                        May your days compose a melody<br>
+                        Of love, of peace, and harmony.<br><br>
+                        I hope this little app made you smile and gave you a tiny glimpse of how special you are to me.<br><br>
+                        May your birthday be filled with love, joy, and a million happy memories. 🎉🎂<br><br>
+                        Happy Birthday once again! 🎈<br><br>
+                        Hope this little app made you smile and feel special ^_^
+                    </p>
+                    <p>With love,</p>
+                    <p>From Your luv 💖</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-  let audioContext = null;
-  let analyser = null;
-  let dataArray = null;
-  let blown = false;
+    let audioContext = null;
+    let analyser = null;
+    let dataArray = null;
+    let blown = false;
 
-  function startMic() {
-    navigator.mediaDevices.getUserMedia({ audio: true })
-      .then(stream => {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const source = audioContext.createMediaStreamSource(stream);
-        analyser = audioContext.createAnalyser();
-        source.connect(analyser);
-        analyser.fftSize = 256;
-        const bufferLength = analyser.frequencyBinCount;
-        dataArray = new Uint8Array(bufferLength);
-        listenToMic();
-      })
-      .catch(error => {
-        console.error("Mic access denied", error);
-      });
-  }
-
-  function listenToMic() {
-    requestAnimationFrame(listenToMic);
-    if (blown) return;
-
-    analyser.getByteFrequencyData(dataArray);
-    let volume = dataArray.reduce((a, b) => a + b) / dataArray.length;
-
-    if (volume > 30) {  // Adjust if needed
-      blown = true;
-
-      document.getElementById("candle").style.backgroundImage = "url('{{candle_blown}}')";
-      document.getElementById("blown").style.display = "block";
-
-      // Delay for picture
-      setTimeout(() => {
-        document.getElementById("picture-section").style.display = "block";
-        window.scrollTo({ 
-          top: document.getElementById("picture-section").offsetTop, 
-          behavior: "smooth" 
-        });
-      }, 1000);
-
-      // Delay for envelope
-      setTimeout(() => {
-        document.getElementById("envelope-section").style.display = "block";
-        window.scrollTo({ 
-          top: document.getElementById("envelope-section").offsetTop, 
-          behavior: "smooth" 
-        });
-      }, 3000);
+    function startMic() {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const source = audioContext.createMediaStreamSource(stream);
+                analyser = audioContext.createAnalyser();
+                source.connect(analyser);
+                analyser.fftSize = 256;
+                const bufferLength = analyser.frequencyBinCount;
+                dataArray = new Uint8Array(bufferLength);
+                listenToMic();
+            })
+            .catch(error => {
+                console.error("Mic access denied", error);
+                document.getElementById("blown").textContent = "Mic access denied. Please allow microphone access to blow the candles.";
+                document.getElementById("blown").style.display = "block";
+                document.getElementById("blown").style.color = "red";
+            });
     }
-  }
 
-  function openEnvelope() {
-    document.getElementById("envelope").classList.add("open");
-  }
+    function listenToMic() {
+        requestAnimationFrame(listenToMic);
+        if (blown) return;
 
-  startMic();
+        analyser.getByteFrequencyData(dataArray);
+        let volume = dataArray.reduce((a, b) => a + b) / dataArray.length;
+
+        if (volume > 100) { // Adjust if needed
+            blown = true;
+
+            document.getElementById("candle").style.backgroundImage = "url('{{candle_blown}}')";
+            document.getElementById("blown").style.display = "block";
+
+            // Signal Streamlit that the candle is blown
+            if (window.parent) {
+                window.parent.postMessage({
+                    type: 'streamlit:set_state',
+                    key: 'candle_blown_state',
+                    value: true
+                }, '*');
+            }
+
+            // Delay for picture
+            setTimeout(() => {
+                document.getElementById("picture-section").style.display = "block";
+                window.scrollTo({ 
+                    top: document.getElementById("picture-section").offsetTop, 
+                    behavior: "smooth" 
+                });
+            }, 1000);
+
+            // Delay for envelope
+            setTimeout(() => {
+                document.getElementById("envelope-section").style.display = "flex";
+                window.scrollTo({ 
+                    top: document.getElementById("envelope-section").offsetTop, 
+                    behavior: "smooth" 
+                });
+            }, 3000);
+        }
+    }
+
+    function openEnvelope() {
+        document.getElementById("envelope").classList.add("open");
+    }
+
+    startMic();
 </script>
 
 </body>
